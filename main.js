@@ -1,21 +1,60 @@
-const lottoNumbersContainer = document.querySelector('.lotto-numbers');
-const generateBtn = document.querySelector('#generate-btn');
+const menuDisplay = document.querySelector('.menu-display');
+const recommendBtn = document.querySelector('#recommend-btn');
 const themeToggle = document.querySelector('#theme-toggle');
 
-function generateNumbers() {
-    const numbers = new Set();
-    while (numbers.size < 6) {
-        numbers.add(Math.floor(Math.random() * 45) + 1);
-    }
+const menus = [
+    'Kimchi Jjigae 🥘',
+    'Bibimbap 🥗',
+    'Bulgogi 🥩',
+    'Sushi 🍣',
+    'Ramen 🍜',
+    'Pizza 🍕',
+    'Pasta 🍝',
+    'Steak 🥩',
+    'Tacos 🌮',
+    'Burger 🍔',
+    'Fried Chicken 🍗',
+    'Phở 🥣',
+    'Dim Sum 🥟',
+    'Pad Thai 🍝',
+    'Curry 🍛',
+    'Jajangmyeon 🍜',
+    'Tteokbokki 🥘',
+    'Kebab 🥙',
+    'Sashimi 🍱',
+    'Donkatsu 🍛'
+];
 
-    lottoNumbersContainer.innerHTML = '';
+function recommendMenu() {
+    let count = 0;
+    const interval = setInterval(() => {
+        const tempIndex = Math.floor(Math.random() * menus.length);
+        displayMenu(menus[tempIndex], false);
+        count++;
+        if (count > 10) {
+            clearInterval(interval);
+            const finalIndex = Math.floor(Math.random() * menus.length);
+            displayMenu(menus[finalIndex], true);
+        }
+    }, 50);
+}
 
-    for (const number of numbers) {
-        const numberEl = document.createElement('div');
-        numberEl.classList.add('lotto-number');
-        numberEl.textContent = number;
-        lottoNumbersContainer.appendChild(numberEl);
+function displayMenu(menu, animate) {
+    menuDisplay.innerHTML = '';
+    const menuEl = document.createElement('div');
+    menuEl.classList.add('menu-item');
+    menuEl.textContent = menu;
+    
+    if (animate) {
+        menuEl.style.transform = 'scale(0.8)';
+        menuEl.style.opacity = '0';
+        setTimeout(() => {
+            menuEl.style.transform = 'scale(1)';
+            menuEl.style.opacity = '1';
+        }, 10);
     }
+    
+    menuDisplay.appendChild(menuEl);
 }
 
 function toggleTheme() {
@@ -31,15 +70,13 @@ function toggleTheme() {
     }
 }
 
-// Check for saved theme preference
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
     document.body.classList.add('dark-mode');
     themeToggle.textContent = '🌙';
 }
 
-generateBtn.addEventListener('click', generateNumbers);
+recommendBtn.addEventListener('click', recommendMenu);
 themeToggle.addEventListener('click', toggleTheme);
 
-// Initial generation
-generateNumbers();
+recommendMenu();
