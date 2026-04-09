@@ -156,6 +156,22 @@ h1 {
     color: var(--btn-text);
 }
 
+/* Disqus Section Styles */
+.disqus-section {
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.disqus-section hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+.dark-mode .disqus-section hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .top-controls {
     position: absolute;
     top: 20px;

@@ -16,23 +16,26 @@
         <div class="menu-display"></div>
         <button id="recommend-btn" data-i18n="recommend_btn">메뉴 추천받기</button>
 
-        <div class="partnership-section">
+        <div class="disqus-section">
             <hr>
-            <h2 data-i18n="partnership_title">제휴 문의</h2>
-            <form action="https://formspree.io/f/mykbawkz" method="POST" id="partnership-form">
-                <div class="form-group">
-                    <input type="text" name="name" data-i18n-placeholder="placeholder_name" placeholder="성함/업체명" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="email" data-i18n-placeholder="placeholder_email" placeholder="이메일 주소" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" data-i18n-placeholder="placeholder_message" placeholder="문의 내용" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn" data-i18n="submit_btn">문의하기</button>
-            </form>
+            <div id="disqus_thread"></div>
         </div>
     </div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        var disqus_config = function () {
+            this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = window.location.pathname; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://ysr26.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
     <script src="main.js"></script>
 </body>
 </html>
