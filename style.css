@@ -90,6 +90,72 @@ h1 {
     transform: translateY(0);
 }
 
+/* Partnership Section Styles */
+.partnership-section {
+    margin-top: 3rem;
+}
+
+.partnership-section hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+.dark-mode .partnership-section hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.partnership-section h2 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+#partnership-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: 2px solid var(--btn-bg);
+    border-color: transparent;
+}
+
+.submit-btn {
+    background-color: transparent;
+    border: 2px solid var(--btn-bg);
+    color: var(--btn-bg);
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+}
+
 #theme-toggle {
     position: absolute;
     top: 20px;
