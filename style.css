@@ -156,23 +156,40 @@ h1 {
     color: var(--btn-text);
 }
 
-#theme-toggle {
+.top-controls {
     position: absolute;
     top: 20px;
     right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#theme-toggle, #lang-toggle {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
     transition: background-color 0.2s;
+    color: var(--text-color);
 }
 
-#theme-toggle:hover {
+#lang-toggle {
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.dark-mode #lang-toggle {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+#theme-toggle:hover, #lang-toggle:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.dark-mode #theme-toggle:hover {
+.dark-mode #theme-toggle:hover, .dark-mode #lang-toggle:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
