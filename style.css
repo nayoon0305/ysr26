@@ -31,46 +31,80 @@ body {
 
 .container {
     background-color: var(--container-bg);
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 24px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: background-color 0.3s;
     position: relative;
-    max-width: 450px;
-    width: 90%;
+    max-width: 600px;
+    width: 95%;
+    margin: 20px 0;
 }
 
 h1 {
     margin-top: 0;
     color: var(--btn-bg);
     font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Game Section */
+.game-section {
     margin-bottom: 2rem;
 }
 
-.menu-display {
+.game-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.player-side, .computer-side {
+    flex: 1;
+}
+
+.player-side p, .computer-side p {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+#webcam-container, #computer-choice {
+    width: 250px;
+    height: 250px;
+    background-color: var(--menu-bg);
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 120px;
-    margin: 2rem 0;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 3px solid var(--btn-bg);
 }
 
-.menu-item {
-    padding: 1.5rem 2.5rem;
-    border-radius: 20px;
-    background-color: var(--menu-bg);
-    color: var(--menu-text);
-    font-size: 2.2rem;
+#computer-choice {
+    font-size: 8rem;
+}
+
+.vs {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--btn-bg);
+}
+
+#result-message {
+    font-size: 1.4rem;
     font-weight: bold;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+    margin: 1.5rem 0;
+    min-height: 1.6rem;
 }
 
-#recommend-btn {
+#start-btn {
     background-color: var(--btn-bg);
     color: var(--btn-text);
-    padding: 1.2rem 2.5rem;
+    padding: 1rem 2rem;
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -80,45 +114,36 @@ h1 {
     box-shadow: 0 4px 6px rgba(255, 152, 0, 0.3);
 }
 
-#recommend-btn:hover {
+#start-btn:hover:not(:disabled) {
     background-color: var(--btn-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(255, 152, 0, 0.4);
 }
 
-#recommend-btn:active {
-    transform: translateY(0);
+#start-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-/* Partnership Section Styles */
-.partnership-section {
-    margin-top: 3rem;
-}
-
-.partnership-section hr {
+/* Partnership Section */
+.partnership-section hr, .disqus-section hr {
     border: none;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin: 2rem 0;
 }
 
-.dark-mode .partnership-section hr {
+.dark-mode hr {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.partnership-section h2 {
-    font-size: 1.2rem;
-    color: var(--text-color);
-    margin-bottom: 1.5rem;
 }
 
 #partnership-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.form-group input,
-.form-group textarea {
+.form-group input, .form-group textarea {
     width: 100%;
     padding: 0.8rem;
     border-radius: 8px;
@@ -130,52 +155,30 @@ h1 {
 }
 
 .form-group textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: 2px solid var(--btn-bg);
-    border-color: transparent;
+    min-height: 80px;
 }
 
 .submit-btn {
-    background-color: transparent;
     border: 2px solid var(--btn-bg);
+    background: transparent;
     color: var(--btn-bg);
     padding: 0.8rem;
     border-radius: 8px;
-    cursor: pointer;
     font-weight: 600;
+    cursor: pointer;
     transition: all 0.2s;
 }
 
 .submit-btn:hover {
-    background-color: var(--btn-bg);
+    background: var(--btn-bg);
     color: var(--btn-text);
 }
 
-/* Disqus Section Styles */
-.disqus-section {
-    margin-top: 3rem;
-    width: 100%;
-}
-
-.disqus-section hr {
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 2rem 0;
-}
-
-.dark-mode .disqus-section hr {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
+/* Controls */
 .top-controls {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     display: flex;
     gap: 10px;
 }
@@ -185,27 +188,27 @@ h1 {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    padding: 8px;
+    padding: 5px;
     border-radius: 50%;
-    transition: background-color 0.2s;
     color: var(--text-color);
 }
 
 #lang-toggle {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: bold;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border: 1px solid var(--text-color);
+    border-radius: 5px;
 }
 
-.dark-mode #lang-toggle {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-#theme-toggle:hover, #lang-toggle:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.dark-mode #theme-toggle:hover, .dark-mode #lang-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+@media (max-width: 600px) {
+    .game-display {
+        flex-direction: column;
+    }
+    #webcam-container, #computer-choice {
+        width: 200px;
+        height: 200px;
+    }
+    #computer-choice {
+        font-size: 6rem;
+    }
 }

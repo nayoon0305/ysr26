@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinner Menu Recommendation</title>
+    <title>가위바위보 게임</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -12,9 +14,25 @@
             <button id="lang-toggle" aria-label="Toggle language">KR/EN</button>
             <button id="theme-toggle" aria-label="Toggle dark mode">🌞</button>
         </div>
-        <h1 data-i18n="title">오늘의 저녁 메뉴 추천</h1>
-        <div class="menu-display"></div>
-        <button id="recommend-btn" data-i18n="recommend_btn">메뉴 추천받기</button>
+        <h1 data-i18n="title">가위바위보 게임</h1>
+        
+        <div class="game-section">
+            <div class="game-display">
+                <div class="player-side">
+                    <p data-i18n="user_label">나 (User)</p>
+                    <div id="webcam-container"></div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="computer-side">
+                    <p data-i18n="computer_label">컴퓨터 (CPU)</p>
+                    <div id="computer-choice">🤖</div>
+                </div>
+            </div>
+            
+            <div id="result-message" data-i18n="start_msg">"Start"를 눌러 게임을 시작하세요!</div>
+            <button id="start-btn" onclick="init()" data-i18n="start_btn">게임 시작 (Start)</button>
+            <div id="label-container" style="display:none;"></div>
+        </div>
 
         <div class="partnership-section">
             <hr>
@@ -39,14 +57,11 @@
         </div>
     </div>
     <script>
-        /**
-        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
         var disqus_config = function () {
-            this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = window.location.pathname; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            this.page.url = window.location.href;
+            this.page.identifier = window.location.pathname;
         };
-        (function() { // DON'T EDIT BELOW THIS LINE
+        (function() {
             var d = document, s = d.createElement('script');
             s.src = 'https://ysr26.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
