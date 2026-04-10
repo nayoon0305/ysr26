@@ -4,86 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-adsense-account" content="ca-pub-1028421747919023">
-    <title>가위바위보 게임</title>
+    <title>봄꽃 인생샷 제작소</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1028421747919023"
      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="top-controls">
-            <button id="lang-toggle" aria-label="Toggle language">KR/EN</button>
-            <button id="theme-toggle" aria-label="Toggle dark mode">🌞</button>
-        </div>
-        <h1 data-i18n="title">가위바위보 게임</h1>
-        
-        <div class="game-section">
-            <div class="game-display">
-                <div class="player-side">
-                    <p data-i18n="user_label">나 (User)</p>
-                    <div id="webcam-container"></div>
-                </div>
-                <div class="vs">VS</div>
-                <div class="computer-side">
-                    <p data-i18n="computer_label">컴퓨터 (CPU)</p>
-                    <div id="computer-choice">🤖</div>
-                </div>
+        <header>
+            <h1>🌸 봄꽃 인생샷 제작소 🌸</h1>
+            <p>한국의 아름다운 봄꽃을 배경으로 인생샷을 만들어보세요.</p>
+        </header>
+
+        <main>
+            <!-- Top Ad Unit -->
+            <div class="ad-container" style="margin-bottom: 20px; text-align: center;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1028421747919023"
+                     data-ad-slot="YOUR_AD_SLOT_1"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
-            
-            <div id="result-message" data-i18n="start_msg">"Start"를 눌러 게임을 시작하세요!</div>
-            <button id="start-btn" onclick="init()" data-i18n="start_btn">게임 시작 (Start)</button>
-            <div id="label-container" style="display:none;"></div>
-        </div>
 
-        <!-- Google AdSense Responsive Ad -->
-        <div style="margin: 20px 0; text-align: center;">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1028421747919023"
-                 data-ad-slot="YOUR_AD_SLOT_HERE"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
+            <section class="flower-selection">
+                <h2>1. 배경 꽃 선택하기</h2>
+                <div class="flower-grid">
+                    <div class="flower-item active" data-flower="cherry" data-bg="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1200&q=80">
+                        <div class="flower-thumb" style="background-image: url('https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=200&q=80')"></div>
+                        <span>벚꽃</span>
+                    </div>
+                    <div class="flower-item" data-flower="forsythia" data-bg="https://images.unsplash.com/photo-1554631221-f9603e6808be?auto=format&fit=crop&w=1200&q=80">
+                        <div class="flower-thumb" style="background-image: url('https://images.unsplash.com/photo-1554631221-f9603e6808be?auto=format&fit=crop&w=200&q=80')"></div>
+                        <span>개나리</span>
+                    </div>
+                    <div class="flower-item" data-flower="azalea" data-bg="https://images.unsplash.com/photo-1599424423956-618d3509657b?auto=format&fit=crop&w=1200&q=80">
+                        <div class="flower-thumb" style="background-image: url('https://images.unsplash.com/photo-1599424423956-618d3509657b?auto=format&fit=crop&w=200&q=80')"></div>
+                        <span>진달래</span>
+                    </div>
+                    <div class="flower-item" data-flower="canola" data-bg="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=1200&q=80">
+                        <div class="flower-thumb" style="background-image: url('https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=200&q=80')"></div>
+                        <span>유채꽃</span>
+                    </div>
+                    <div class="flower-item" data-flower="apricot" data-bg="https://images.unsplash.com/photo-1521495084171-3ad639e3d525?auto=format&fit=crop&w=1200&q=80">
+                        <div class="flower-thumb" style="background-image: url('https://images.unsplash.com/photo-1521495084171-3ad639e3d525?auto=format&fit=crop&w=200&q=80')"></div>
+                        <span>매화</span>
+                    </div>
+                </div>
+            </section>
 
-        <div class="partnership-section">
-            <hr>
-            <h2 data-i18n="partnership_title">제휴 문의</h2>
-            <form action="https://formspree.io/f/mykbawkz" method="POST" id="partnership-form">
-                <div class="form-group">
-                    <input type="text" name="name" data-i18n-placeholder="placeholder_name" placeholder="성함/업체명" required>
+            <section class="photo-upload">
+                <h2>2. 인물 사진 올리기</h2>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <label for="file-input" class="upload-btn">사진 선택하기</label>
+                    <p class="hint">정면 사진을 추천합니다.</p>
                 </div>
-                <div class="form-group">
-                    <input type="email" name="email" data-i18n-placeholder="placeholder_email" placeholder="이메일 주소" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" data-i18n-placeholder="placeholder_message" placeholder="문의 내용" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn" data-i18n="submit_btn">문의하기</button>
-            </form>
-        </div>
+            </section>
 
-        <div class="disqus-section">
-            <hr>
-            <div id="disqus_thread"></div>
-        </div>
+            <section class="preview-section">
+                <h2>3. 미리보기 및 저장</h2>
+                <div id="capture-area" class="capture-area">
+                    <div id="flower-bg" class="flower-bg" style="background-image: url('https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1200&q=80')">
+                        <div id="portrait-container" class="portrait-container">
+                            <img id="portrait-img" src="" alt="" style="display: none;">
+                            <div id="placeholder-text">사진을 업로드해주세요</div>
+                        </div>
+                    </div>
+                </div>
+                <button id="download-btn" class="download-btn" disabled>이미지 저장하기</button>
+            </section>
+
+            <!-- Bottom Ad Unit -->
+            <div class="ad-container" style="margin-top: 40px; text-align: center;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1028421747919023"
+                     data-ad-slot="YOUR_AD_SLOT_2"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 봄꽃 인생샷 제작소. All rights reserved.</p>
+        </footer>
     </div>
-    <script>
-        var disqus_config = function () {
-            this.page.url = window.location.href;
-            this.page.identifier = window.location.pathname;
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://ysr26.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
