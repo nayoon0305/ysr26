@@ -48,34 +48,46 @@ const translations = {
 };
 
 let currentLang = localStorage.getItem('lang') || 'ko';
-const URL = "https://teachablemachine.withgoogle.com/models/I51vD5K1W/"; // This is a placeholder, user should update it if they have a specific one.
+const URL = "https://teachablemachine.withgoogle.com/models/l02IbpV7q/"; // Updated to a reliable public model
 
 let model, webcam, labelContainer, maxPredictions;
 let isPlaying = false;
+let lastPrediction = "";
 
 async function init() {
-    startBtn.disabled = true;
-    resultMessageEl.textContent = translations[currentLang].loading_msg;
-
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
-
-    model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
-
-    const flip = true;
-    webcam = new tmImage.Webcam(250, 250, flip);
-    await webcam.setup();
-    await webcam.play();
-    window.requestAnimationFrame(loop);
-
-    document.getElementById("webcam-container").innerHTML = '';
-    document.getElementById("webcam-container").appendChild(webcam.canvas);
+    if (isPlaying) return;
     
-    labelContainer = document.getElementById("label-container");
-    labelContainer.innerHTML = '';
-    for (let i = 0; i < maxPredictions; i++) {
-        labelContainer.appendChild(document.createElement("div"));
+    startBtn.disabled = true;
+
+    if (!model) {
+        resultMessageEl.textContent = translations[currentLang].loading_msg;
+        try {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            const flip = true;
+            webcam = new tmImage.Webcam(250, 250, flip);
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            document.getElementById("webcam-container").innerHTML = '';
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            
+            labelContainer = document.getElementById("label-container");
+            labelContainer.innerHTML = '';
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        } catch (e) {
+            console.error(e);
+            resultMessageEl.textContent = "Error loading model. Please try again.";
+            startBtn.disabled = false;
+            return;
+        }
     }
     
     playGame();
@@ -86,8 +98,6 @@ async function loop() {
     await predict();
     window.requestAnimationFrame(loop);
 }
-
-let lastPrediction = "";
 
 async function predict() {
     const prediction = await model.predict(webcam.canvas);
@@ -100,9 +110,12 @@ async function predict() {
             bestMatch = prediction[i].className;
         }
         const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
+        if (labelContainer.childNodes[i]) {
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
     }
-    lastPrediction = bestMatch;
+    // Normalize to standard names: Rock, Paper, Scissors
+    lastPrediction = bestMatch.charAt(0).toUpperCase() + bestMatch.slice(1).toLowerCase();
 }
 
 function getComputerChoice() {
@@ -120,9 +133,9 @@ function getEmoji(choice) {
 
 async function playGame() {
     isPlaying = true;
+    computerChoiceEl.textContent = '🤖';
     resultMessageEl.textContent = translations[currentLang].ready_msg;
     
-    // 3 seconds delay before result
     let countdown = 3;
     const countInterval = setInterval(() => {
         if (countdown > 0) {
@@ -139,7 +152,12 @@ function showResult() {
     const computerChoice = getComputerChoice();
     computerChoiceEl.textContent = getEmoji(computerChoice);
     
-    const userChoice = lastPrediction; // Class names should be Rock, Paper, Scissors
+    // Support for common class names like 'Rock', 'rock', '바위', etc.
+    let userChoice = lastPrediction;
+    if (userChoice.includes('바위')) userChoice = 'Rock';
+    if (userChoice.includes('보')) userChoice = 'Paper';
+    if (userChoice.includes('가위')) userChoice = 'Scissors';
+
     let result = "";
 
     if (userChoice === computerChoice) {
@@ -150,8 +168,10 @@ function showResult() {
         (userChoice === 'Scissors' && computerChoice === 'Paper')
     ) {
         result = translations[currentLang].win;
-    } else {
+    } else if (['Rock', 'Paper', 'Scissors'].includes(userChoice)) {
         result = translations[currentLang].lose;
+    } else {
+        result = "Retry! (No hand detected)";
     }
 
     resultMessageEl.textContent = result;
